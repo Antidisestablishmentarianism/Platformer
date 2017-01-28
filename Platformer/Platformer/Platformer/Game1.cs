@@ -20,8 +20,6 @@ namespace Platformer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public float scale = 1f;
-
         public Random rand;
 
         List<GameObject> objects;
@@ -36,6 +34,8 @@ namespace Platformer
             graphics.PreferredBackBufferWidth = BackBufferWidth;
             graphics.PreferredBackBufferHeight = BackBufferHeight;
             Content.RootDirectory = "Content";
+
+            this.IsMouseVisible = true;
 
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
 

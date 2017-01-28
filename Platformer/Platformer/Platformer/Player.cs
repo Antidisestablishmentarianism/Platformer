@@ -37,7 +37,7 @@ namespace Platformer
         {
             get
             {
-                return new Rectangle((int)(position.X * Game1.Instance.scale), (int)(position.Y * Game1.Instance.scale), (int)(size * Game1.Instance.scale), (int)(size * Game1.Instance.scale));
+                return new Rectangle((int)(position.X), (int)(position.Y), (int)(size), (int)(size));
             }
         }
 
@@ -81,50 +81,45 @@ namespace Platformer
                 }
             }
 
-            objects.OfType<Tile>().ToList().ForEach(t =>
+            objects.OfType<Tile>().ToList().ForEach(tile =>
             {
-                if (!t.isEmpty)
+                if (!tile.isEmpty)
                 {
-                    if (t.isBlock)
+                    if (tile.isBlock)
                     {
-                        if (t.Bounds.Contains(collisionPoints[0]))
+                        if (tile.Bounds.Contains(collisionPoints[0]))
                         {
-                            position.Y = t.position.Y + Tile.Size + collisionBuffer;
+                            position.Y = tile.position.Y + Tile.Size + collisionBuffer;
                             velocity.Y *= -0.5f;
-                            UpdateCollisionPoints();
                         }
 
-                        if (t.Bounds.Contains(collisionPoints[1]) || t.Bounds.Contains(collisionPoints[2]))
+                        if (tile.Bounds.Contains(collisionPoints[1]) || tile.Bounds.Contains(collisionPoints[2]))
                         {
-                            position.X = t.position.X - size - collisionBuffer * 2;
+                            position.X = tile.position.X - size - collisionBuffer * 2;
                             velocity.X = 0;
-                            UpdateCollisionPoints();
                         }
 
-                        if (t.Bounds.Contains(collisionPoints[3]))
+                        if (tile.Bounds.Contains(collisionPoints[3]))
                         {
-                            position.Y = t.position.Y - size - collisionBuffer;
-                            UpdateCollisionPoints();
+                            position.Y = tile.position.Y - size - collisionBuffer;
 
                             if (velocity.Y > 0) velocity.Y = 0;
                         }
 
-                        if (t.Bounds.Contains(collisionPoints[4]) || t.Bounds.Contains(collisionPoints[5]))
+                        if (tile.Bounds.Contains(collisionPoints[4]) || tile.Bounds.Contains(collisionPoints[5]))
                         {
-                            position.X = t.position.X + Tile.Size + collisionBuffer;
+                            position.X = tile.position.X + Tile.Size + collisionBuffer;
                             velocity.X = 0;
-                            UpdateCollisionPoints();
                         }
                     }
                     else
                     {
                         if (!(keyboard.IsKeyDown(Keys.LeftShift) && (keyboard.IsKeyDown(Keys.S) || keyboard.IsKeyDown(Keys.Down))))
                         {
-                            if ((t.Bounds.Contains(collisionPoints[3]) || t.Bounds.Contains(collisionPoints[6]) || t.Bounds.Contains(collisionPoints[7])) && velocity.Y > 0)
+                            if ((tile.Bounds.Contains(collisionPoints[3]) || tile.Bounds.Contains(collisionPoints[6]) || tile.Bounds.Contains(collisionPoints[7])) && velocity.Y > 0)
                             {
-                                position.Y = t.position.Y - size - collisionBuffer;
+                                position.Y = tile.position.Y - size - collisionBuffer;
                                 velocity.Y = 0;
-                                UpdateCollisionPoints();
                             }
                         }
                     }
@@ -142,6 +137,16 @@ namespace Platformer
         public override void Draw(SpriteBatch sb)
         {
             sb.Draw(Texture, Bounds, Color.White);
+
+            // DebugCollisionPoints(sb);
+        }
+
+        private void DebugCollisionPoints(SpriteBatch sb)
+        {
+            for (int i = 0; i < collisionPoints.Length; i++)
+            {
+                sb.Draw(Texture, new Rectangle(collisionPoints[i].X - 2, collisionPoints[i].Y - 2, 4, 4), Color.White);
+            }
         }
 
         private void UpdateCollisionPoints()

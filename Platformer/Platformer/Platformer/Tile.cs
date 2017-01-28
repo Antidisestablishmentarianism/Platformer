@@ -24,13 +24,13 @@ namespace Platformer
         public bool isBlock;
         public bool isEmpty;
 
-        public static int Size { get { return (int)(size * Game1.Instance.scale); } }
+        public static int Size { get { return (int)(size); } }
 
         public Rectangle Bounds
         {
             get
             {
-                return new Rectangle((int)(position.X * Game1.Instance.scale), (int)(position.Y * Game1.Instance.scale), (int)(size * Game1.Instance.scale), (int)(size * Game1.Instance.scale));
+                return new Rectangle((int)(position.X), (int)(position.Y), (int)(size), (int)(size));
             }
         }
 
