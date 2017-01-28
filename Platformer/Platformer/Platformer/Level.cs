@@ -61,7 +61,6 @@ namespace Platformer
                 Console.WriteLine(e.Message);
             }
 
-            Console.WriteLine(lines.Count);
             tiles = new Tile[numTilesAcross, lines.Count];
 
             for (int y = 0; y < Height; y++)
@@ -70,30 +69,34 @@ namespace Platformer
                 {
                     string currentRow = lines[y];
                     char tileType = currentRow[x];
-                    tiles[x, y] = LoadTile(tileType, x, y);
+                    tiles[x, y] = LoadTile(objects, tileType, x, y);
 
                     objects.Add(tiles[x, y]);
                 }
             }
         }
 
-        private Tile LoadTile(char tileType, int x, int y)
+        private Tile LoadTile(List<GameObject> objects, char tileType, int x, int y)
         {
             switch (tileType)
             {
+                case 'P':
+                    objects.Add(new Player(new Vector2(x, y)));
+                    return new Tile(new Point(x, y), -1, false);
+
                 case '.':
                     return new Tile(new Point(x, y), -1, false);
 
                 case 'B':
-                    return new Tile(new Point(x, y), 0, false);
+                    return new Tile(new Point(x, y), 16, false);
                 case 'G':
-                    return new Tile(new Point(x, y), 64, false);
+                    return new Tile(new Point(x, y), 80, false);
                 case 'O':
-                    return new Tile(new Point(x, y), 128, false);
+                    return new Tile(new Point(x, y), 144, false);
                 case 'R':
-                    return new Tile(new Point(x, y), 192, false);
+                    return new Tile(new Point(x, y), 208, false);
                 case 'Y':
-                    return new Tile(new Point(x, y), 256, false);
+                    return new Tile(new Point(x, y), 272, false);
 
                 case 'b':
                     return new Tile(new Point(x, y), 0, true);

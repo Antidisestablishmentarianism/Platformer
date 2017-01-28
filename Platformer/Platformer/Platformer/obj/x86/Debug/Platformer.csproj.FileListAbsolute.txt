@@ -18,3 +18,24 @@ C:\Users\180502\Desktop\Platformer\Platformer\Platformer\bin\x86\Debug\Content\B
 C:\Users\180502\Desktop\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Platforms.xnb
 C:\Users\180502\Desktop\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Levels\Level01.txt
 C:\Users\180502\Desktop\Platformer\Platformer\Platformer\bin\x86\Debug\Content\EmptyBlock.xnb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Blocks.xnb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Platforms.xnb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\EmptyBlock.xnb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Levels\Level01.txt
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Platformer.exe
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Platformer.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.dll
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Game.dll
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.dll
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.dll
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.dll
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.xml
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Game.xml
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.xml
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.xml
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.xml
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Platformer.exe
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Platformer.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Player.xnb

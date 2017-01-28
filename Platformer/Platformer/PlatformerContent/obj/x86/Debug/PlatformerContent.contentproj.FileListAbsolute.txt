@@ -1,1 +1,2 @@
 C:\Users\180502\Desktop\Platformer\Platformer\PlatformerContent\obj\x86\Debug\PlatformerContent.contentprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\PlatformerContent\obj\x86\Debug\PlatformerContent.contentprojResolveAssemblyReference.cache

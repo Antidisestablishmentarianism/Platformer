@@ -21,8 +21,10 @@ namespace Platformer
         public Point position;
         public Point sourcePos;
 
-        bool isFloor;
-        bool isEmpty;
+        public bool isBlock;
+        public bool isEmpty;
+
+        public static int Size { get { return (int)(size * Game1.Instance.scale); } }
 
         public Rectangle Bounds
         {
@@ -36,7 +38,7 @@ namespace Platformer
         {
             get
             {
-                return new Rectangle(sourcePos.X, sourcePos.Y, size, size);
+                return new Rectangle(sourcePos.X, sourcePos.Y, size, isBlock ? size : size / 4 * 3);
             }
         }
 
@@ -44,7 +46,7 @@ namespace Platformer
         {
             float scale = Game1.BackBufferWidth / 20;
             this.position = new Point((int)(position.X * scale), (int)(position.Y * scale));
-            this.isFloor = isFloor;
+            this.isBlock = isFloor;
 
             if (sourcePos >= 0)
                 this.sourcePos = new Point(Game1.Instance.rand.Next(5) * 64, sourcePos);
@@ -59,7 +61,7 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(isFloor ? BlockSheet : isEmpty ? EmptyBlock : PlatformSheet, Bounds, SourceBounds, Color.White);
+            sb.Draw(isBlock ? BlockSheet : isEmpty ? EmptyBlock : PlatformSheet, Bounds, SourceBounds, Color.White);
         }
     }
 }
