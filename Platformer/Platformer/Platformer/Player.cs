@@ -24,7 +24,7 @@ namespace Platformer
 
         int size = 64;
 
-        bool isAbleToJump = false;
+        bool isAbleToJump = true;
 
         KeyboardState keyboard;
         KeyboardState oldKeyboard;
@@ -138,7 +138,7 @@ namespace Platformer
         {
             sb.Draw(Texture, Bounds, Color.White);
 
-            // DebugCollisionPoints(sb);
+            //DebugCollisionPoints(sb);
         }
 
         private void DebugCollisionPoints(SpriteBatch sb)
@@ -170,10 +170,10 @@ namespace Platformer
             collisionPoints[5] = new Point((int)(position.X - collisionBuffer), (int)(position.Y + size / 3));
 
             // Lower right corner
-            collisionPoints[6] = new Point((int)(position.X + size), (int)(position.Y + size));
+            collisionPoints[6] = new Point((int)(position.X + size + collisionBuffer), (int)(position.Y + size + collisionBuffer));
 
             // Lower left corner
-            collisionPoints[7] = new Point((int)(position.X), (int)(position.Y + size));
+            collisionPoints[7] = new Point((int)(position.X - collisionBuffer), (int)(position.Y + size + collisionBuffer));
         }
     }
 }
