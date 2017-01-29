@@ -15,14 +15,14 @@ namespace Platformer
         public int Width => _tiles.GetLength(0);
         public int Height => _tiles.GetLength(1);
 
-        public Level(List<GameObject> objects, IServiceProvider serviceProvider, string path)
+        public Level(ICollection<GameObject> objects, IServiceProvider serviceProvider, string path)
         {
             Content = new ContentManager(serviceProvider, "Content");
 
             LoadTiles(objects, path);
         }
 
-        private void LoadTiles(List<GameObject> objects, string path)
+        private void LoadTiles(ICollection<GameObject> objects, string path)
         {
             var numTilesAcross = 0;
             var lines = new List<string>();
@@ -48,18 +48,18 @@ namespace Platformer
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file {0} could not be read", path);
+                Console.WriteLine($"The file {path} could not be read");
                 Console.WriteLine(e.Message);
             }
 
             _tiles = new Tile[numTilesAcross, lines.Count];
 
-            for (int y = 0; y < Height; y++)
+            for (var y = 0; y < Height; y++)
             {
-                for (int x = 0; x < Width; x++)
+                for (var x = 0; x < Width; x++)
                 {
-                    string currentRow = lines[y];
-                    char tileType = currentRow[x];
+                    var currentRow = lines[y];
+                    var tileType = currentRow[x];
                     _tiles[x, y] = LoadTile(objects, tileType, x, y);
 
                     objects.Add(_tiles[x, y]);
@@ -67,7 +67,7 @@ namespace Platformer
             }
         }
 
-        private Tile LoadTile(List<GameObject> objects, char tileType, int x, int y)
+        private static Tile LoadTile(ICollection<GameObject> objects, char tileType, int x, int y)
         {
             switch (tileType)
             {

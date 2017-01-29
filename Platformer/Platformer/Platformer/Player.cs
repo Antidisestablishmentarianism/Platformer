@@ -17,9 +17,9 @@ namespace Platformer
         public Vector2 Position;
         public Vector2 Velocity;
 
-        private static int Size => 64;
+        private static readonly Point Size = new Point(64, 64);
 
-        private const float tolerance = 0.0001f;
+        private const float Tolerance = 0.0001f;
 
         private bool _isAbleToJump = true;
 
@@ -30,7 +30,7 @@ namespace Platformer
         private const int CollisionBuffer = 1;
 
         public static Texture2D Texture { get; set; }
-        public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size, Size);
+        public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public Player(Vector2 position)
         {
@@ -53,7 +53,7 @@ namespace Platformer
             HandleKeyboardInput();
             HandleTileCollisions(objects);
 
-            _isAbleToJump = Math.Abs(Velocity.Y) < tolerance;
+            _isAbleToJump = Math.Abs(Velocity.Y) < Tolerance;
 
             Position += Velocity;
             Velocity.Y += Gravity;
@@ -77,7 +77,7 @@ namespace Platformer
 
             if (_keyboard.IsKeyDown(Keys.D) || _keyboard.IsKeyDown(Keys.Right))
             {
-                if (Math.Abs(Velocity.X - (-Speed)) < tolerance || (_keyboard.IsKeyDown(Keys.LeftShift) && Math.Abs(Velocity.X - (-SprintSpeed)) < tolerance))
+                if (Math.Abs(Velocity.X - (-Speed)) < Tolerance || (_keyboard.IsKeyDown(Keys.LeftShift) && Math.Abs(Velocity.X - (-SprintSpeed)) < Tolerance))
                     Velocity.X = 0;
                 else
                     Velocity.X = _keyboard.IsKeyDown(Keys.LeftShift) ? SprintSpeed : Speed;
@@ -93,7 +93,7 @@ namespace Platformer
             }
         }
 
-        private void HandleTileCollisions(List<GameObject> objects)
+        private void HandleTileCollisions(IEnumerable<GameObject> objects)
         {
             objects.OfType<Tile>().ToList().ForEach(tile =>
             {
@@ -109,13 +109,13 @@ namespace Platformer
 
                         if (tile.Bounds.Contains(_collisionPoints[1]) || tile.Bounds.Contains(_collisionPoints[2]))
                         {
-                            Position.X = tile.Position.X - Size - CollisionBuffer * 2;
+                            Position.X = tile.Position.X - Size.X - CollisionBuffer * 2;
                             Velocity.X = 0;
                         }
 
                         if (tile.Bounds.Contains(_collisionPoints[3]))
                         {
-                            Position.Y = tile.Position.Y - Size - CollisionBuffer;
+                            Position.Y = tile.Position.Y - Size.Y - CollisionBuffer;
 
                             if (Velocity.Y > 0) Velocity.Y = 0;
                         }
@@ -132,7 +132,7 @@ namespace Platformer
                         {
                             if ((tile.Bounds.Contains(_collisionPoints[3]) || tile.Bounds.Contains(_collisionPoints[6]) || tile.Bounds.Contains(_collisionPoints[7])) && Velocity.Y > 0)
                             {
-                                Position.Y = tile.Position.Y - Size - CollisionBuffer;
+                                Position.Y = tile.Position.Y - Size.Y - CollisionBuffer;
                                 Velocity.Y = 0;
                             }
                         }
@@ -152,28 +152,28 @@ namespace Platformer
         private void UpdateCollisionPoints()
         {
             // Top
-            _collisionPoints[0] = new Point((int)(Position.X + Size / (float)2), (int)(Position.Y - CollisionBuffer));
+            _collisionPoints[0] = new Point((int)(Position.X + Size.X / (float)2), (int)(Position.Y - CollisionBuffer));
 
             // Upper right
-            _collisionPoints[1] = new Point((int)(Position.X + Size + CollisionBuffer), (int)(Position.Y + Size / (float)3));
+            _collisionPoints[1] = new Point((int)(Position.X + Size.X + CollisionBuffer), (int)(Position.Y + Size.Y / (float)3));
 
             // Lower right
-            _collisionPoints[2] = new Point((int)(Position.X + Size + CollisionBuffer), (int)(Position.Y + Size / 3 * 2));
+            _collisionPoints[2] = new Point((int)(Position.X + Size.X + CollisionBuffer), (int)(Position.Y + Size.Y / 3 * 2));
 
             // Bottom
-            _collisionPoints[3] = new Point((int)(Position.X + Size / (float)2), (int)(Position.Y + Size + CollisionBuffer));
+            _collisionPoints[3] = new Point((int)(Position.X + Size.X / (float)2), (int)(Position.Y + Size.Y + CollisionBuffer));
 
             // Lower left
-            _collisionPoints[4] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size / 3 * 2));
+            _collisionPoints[4] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size.Y / 3 * 2));
 
             // Upper left
-            _collisionPoints[5] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size / (float)3));
+            _collisionPoints[5] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size.Y / (float)3));
 
             // Lower right corner
-            _collisionPoints[6] = new Point((int)(Position.X + Size + CollisionBuffer), (int)(Position.Y + Size + CollisionBuffer));
+            _collisionPoints[6] = new Point((int)(Position.X + Size.X + CollisionBuffer), (int)(Position.Y + Size.Y + CollisionBuffer));
 
             // Lower left corner
-            _collisionPoints[7] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size + CollisionBuffer));
+            _collisionPoints[7] = new Point((int)(Position.X - CollisionBuffer), (int)(Position.Y + Size.Y + CollisionBuffer));
         }
     }
 }

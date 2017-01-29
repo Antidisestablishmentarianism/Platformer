@@ -68,8 +68,7 @@ namespace Platformer
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                Exit();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) Exit();
 
             _objects.ForEach(o => o.Update(_objects));
             _objects = _objects.Where(o => !o.ToDestroy).ToList();
