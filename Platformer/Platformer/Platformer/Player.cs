@@ -59,6 +59,26 @@ namespace Platformer
             oldKeyboard = keyboard;
             keyboard = Keyboard.GetState();
 
+            HandleKeyboardInput();
+            HandleTileCollisions(objects);
+
+            isAbleToJump = velocity.Y == 0;
+
+            position += velocity;
+            velocity.Y += gravity;
+            velocity.X = 0;
+            UpdateCollisionPoints();
+        }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            sb.Draw(Texture, Bounds, Color.White);
+
+            //DebugCollisionPoints(sb);
+        }
+
+        private void HandleKeyboardInput()
+        {
             if (keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.Left))
             {
                 velocity.X = keyboard.IsKeyDown(Keys.LeftShift) ? -sprintSpeed : -speed;
@@ -80,7 +100,10 @@ namespace Platformer
                     isAbleToJump = false;
                 }
             }
+        }
 
+        private void HandleTileCollisions(List<GameObject> objects)
+        {
             objects.OfType<Tile>().ToList().ForEach(tile =>
             {
                 if (!tile.isEmpty)
@@ -125,20 +148,6 @@ namespace Platformer
                     }
                 }
             });
-
-            isAbleToJump = velocity.Y == 0;
-
-            position += velocity;
-            velocity.Y += gravity;
-            velocity.X = 0;
-            UpdateCollisionPoints();
-        }
-
-        public override void Draw(SpriteBatch sb)
-        {
-            sb.Draw(Texture, Bounds, Color.White);
-
-            //DebugCollisionPoints(sb);
         }
 
         private void DebugCollisionPoints(SpriteBatch sb)
