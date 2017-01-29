@@ -23,11 +23,11 @@ namespace Platformer
         public Tile(Point position, int sourcePos, bool isBlock)
         {
             const float scale = Game1.BackBufferWidth / (float)20;
-            this.Position = new Point((int)(position.X * scale), (int)(position.Y * scale));
-            this.IsBlock = isBlock;
+            Position = new Point((int)(position.X * scale), (int)(position.Y * scale));
+            IsBlock = isBlock;
 
             if (sourcePos >= 0)
-                this.SourcePos = new Point(Game1.Instance.Rand.Next(5) * 64, sourcePos);
+                SourcePos = new Point(Game1.Instance.Rand.Next(5) * 64, sourcePos);
             else
                 IsEmpty = true;
         }

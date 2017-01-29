@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Platformer
 {
-    class Level : IDisposable
+    public class Level : IDisposable
     {
         private Tile[,] _tiles;
 

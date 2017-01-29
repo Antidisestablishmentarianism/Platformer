@@ -5,7 +5,7 @@ namespace Platformer
 {
     public abstract class GameObject
     {
-        public bool ToDestroy = false;
+        public bool ToDestroy;
 
         public void Destroy()
         {
