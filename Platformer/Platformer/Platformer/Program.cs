@@ -1,5 +1,3 @@
-using System;
-
 namespace Platformer
 {
 #if WINDOWS || XBOX

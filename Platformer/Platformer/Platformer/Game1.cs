@@ -2,40 +2,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Platformer
 {
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class Game1 : Game
     {
         public const int TargetFrameRate = 60;
         public const int BackBufferWidth = 1280;
         public const int BackBufferHeight = 720;
 
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public GraphicsDeviceManager Graphics { get; }
+        private SpriteBatch _spriteBatch;
 
-        public Random rand;
+        public Random Rand;
 
-        List<GameObject> objects;
+        private List<GameObject> _objects;
 
-        private Level level;
+        private Level _level;
 
         public static Game1 Instance;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = BackBufferWidth;
-            graphics.PreferredBackBufferHeight = BackBufferHeight;
+            Graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferWidth = BackBufferWidth,
+                PreferredBackBufferHeight = BackBufferHeight
+            };
             Content.RootDirectory = "Content";
 
-            this.IsMouseVisible = true;
+            IsMouseVisible = true;
 
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
 
@@ -44,15 +42,15 @@ namespace Platformer
 
         protected override void Initialize()
         {
-            objects = new List<GameObject>();
-            rand = new Random();
+            _objects = new List<GameObject>();
+            Rand = new Random();
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Tile.BlockSheet = Content.Load<Texture2D>("Blocks");
             Tile.PlatformSheet = Content.Load<Texture2D>("Platforms");
@@ -71,10 +69,10 @@ namespace Platformer
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+                Exit();
 
-            objects.ForEach(o => o.Update(objects));
-            objects = objects.Where(o => !o.toDestroy).ToList();
+            _objects.ForEach(o => o.Update(_objects));
+            _objects = _objects.Where(o => !o.ToDestroy).ToList();
 
             base.Update(gameTime);
         }
@@ -83,16 +81,16 @@ namespace Platformer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            objects.ForEach(o => o.Draw(spriteBatch));
-            spriteBatch.End();
+            _spriteBatch.Begin();
+            _objects.ForEach(o => o.Draw(_spriteBatch));
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         private void LoadLevel()
         {
-            level = new Level(objects, Services, @"Content/Levels/Level01.txt");
+            _level = new Level(_objects, Services, @"Content/Levels/Level01.txt");
         }
     }
 }

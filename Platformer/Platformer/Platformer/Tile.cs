@@ -1,57 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Platformer
 {
-    class Tile : GameObject
+    public class Tile : GameObject
     {
-        public const int size = 64;
+        public const int Size = 64;
 
         public static Texture2D BlockSheet, PlatformSheet, EmptyBlock;
 
-        public Point position;
-        public Point sourcePos;
+        public Point Position;
+        public Point SourcePos;
 
-        public bool isBlock;
-        public bool isEmpty;
+        public bool IsBlock;
+        public bool IsEmpty;
 
-        public static int Size { get { return (int)(size); } }
+        public Rectangle Bounds => new Rectangle(Position.X, Position.Y, Size, Size);
 
-        public Rectangle Bounds
-        {
-            get
-            {
-                return new Rectangle((int)(position.X), (int)(position.Y), (int)(size), (int)(size));
-            }
-        }
-
-        public Rectangle SourceBounds
-        {
-            get
-            {
-                return new Rectangle(sourcePos.X, sourcePos.Y, size, isBlock ? size : size / 4 * 3);
-            }
-        }
+        private Rectangle SourceBounds => new Rectangle(SourcePos.X, SourcePos.Y, Size, IsBlock ? Size : Size / 4 * 3);
 
         public Tile(Point position, int sourcePos, bool isBlock)
         {
-            float scale = Game1.BackBufferWidth / 20;
-            this.position = new Point((int)(position.X * scale), (int)(position.Y * scale));
-            this.isBlock = isBlock;
+            const float scale = Game1.BackBufferWidth / (float)20;
+            this.Position = new Point((int)(position.X * scale), (int)(position.Y * scale));
+            this.IsBlock = isBlock;
 
             if (sourcePos >= 0)
-                this.sourcePos = new Point(Game1.Instance.rand.Next(5) * 64, sourcePos);
+                this.SourcePos = new Point(Game1.Instance.Rand.Next(5) * 64, sourcePos);
             else
-                isEmpty = true;
+                IsEmpty = true;
         }
 
         public override void Update(List<GameObject> objects)
@@ -61,7 +39,7 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(isBlock ? BlockSheet : isEmpty ? EmptyBlock : PlatformSheet, Bounds, SourceBounds, Color.White);
+            sb.Draw(IsBlock ? BlockSheet : IsEmpty ? EmptyBlock : PlatformSheet, Bounds, SourceBounds, Color.White);
         }
     }
 }
