@@ -19,7 +19,7 @@ namespace Platformer
 
         private static int Size => 64;
 
-        private const float Tolerance = 0.0001f;
+        private const float tolerance = 0.0001f;
 
         private bool _isAbleToJump = true;
 
@@ -53,7 +53,7 @@ namespace Platformer
             HandleKeyboardInput();
             HandleTileCollisions(objects);
 
-            _isAbleToJump = Math.Abs(Velocity.Y) < Tolerance;
+            _isAbleToJump = Math.Abs(Velocity.Y) < tolerance;
 
             Position += Velocity;
             Velocity.Y += Gravity;
@@ -77,7 +77,7 @@ namespace Platformer
 
             if (_keyboard.IsKeyDown(Keys.D) || _keyboard.IsKeyDown(Keys.Right))
             {
-                if (Math.Abs(Velocity.X - (-Speed)) < Tolerance || (_keyboard.IsKeyDown(Keys.LeftShift) && Math.Abs(Velocity.X - (-SprintSpeed)) < Tolerance))
+                if (Math.Abs(Velocity.X - (-Speed)) < tolerance || (_keyboard.IsKeyDown(Keys.LeftShift) && Math.Abs(Velocity.X - (-SprintSpeed)) < tolerance))
                     Velocity.X = 0;
                 else
                     Velocity.X = _keyboard.IsKeyDown(Keys.LeftShift) ? SprintSpeed : Speed;
