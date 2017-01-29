@@ -42,11 +42,11 @@ namespace Platformer
             }
         }
 
-        public Tile(Point position, int sourcePos, bool isFloor)
+        public Tile(Point position, int sourcePos, bool isBlock)
         {
             float scale = Game1.BackBufferWidth / 20;
             this.position = new Point((int)(position.X * scale), (int)(position.Y * scale));
-            this.isBlock = isFloor;
+            this.isBlock = isBlock;
 
             if (sourcePos >= 0)
                 this.sourcePos = new Point(Game1.Instance.rand.Next(5) * 64, sourcePos);
