@@ -17,7 +17,7 @@ namespace Platformer
         public Vector2 Position;
         public Vector2 Velocity;
 
-        private SpriteEffects _spriteEffects = new SpriteEffects();
+        private SpriteEffects _spriteEffects;
 
         private static readonly Point Size = new Point(64, 64);
 
@@ -31,7 +31,7 @@ namespace Platformer
         private readonly Point[] _collisionPoints;
         private const int CollisionBuffer = 1;
 
-        List<Rectangle> walkingAnimation = new List<Rectangle>
+        private List<Rectangle> WalkingAnimation { get; } = new List<Rectangle>
         {
             new Rectangle(0, 0, 96, 96),
             new Rectangle(96, 0, 96, 96),
@@ -42,7 +42,7 @@ namespace Platformer
             new Rectangle(192, 96, 96, 96)
         };
 
-        List<Rectangle> jumpingAnimation = new List<Rectangle>
+        private List<Rectangle> JumpingAnimation { get; } = new List<Rectangle>
         {
             new Rectangle(288, 96, 96, 96),
             new Rectangle(0, 192, 96, 96),
