@@ -65,7 +65,7 @@ namespace Platformer
         {
             sb.Draw(Texture, Bounds, Color.White);
 
-            //DebugCollisionPoints(sb);
+            DebugCollisionPoints(sb);
         }
 
         private void HandleKeyboardInput()
