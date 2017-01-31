@@ -60,3 +60,4 @@ C:\Users\user\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platfo
 \\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 \\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Platformer.exe
 \\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\obj\x86\Debug\Platformer.pdb
+\\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\playerSheet.xnb

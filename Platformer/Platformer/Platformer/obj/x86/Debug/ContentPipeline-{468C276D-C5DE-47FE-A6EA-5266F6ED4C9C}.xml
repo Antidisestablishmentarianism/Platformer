@@ -37,6 +37,15 @@
       <Output>\\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\Player.xnb</Output>
       <Time>2017-01-31T13:05:26.9843742-06:00</Time>
     </Item>
+    <Item>
+      <Source>playerSheet.png</Source>
+      <Name>playerSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\fisd-fs4\HS\RHS\180502\Documents\Visual Studio 2015\Projects\Platformer\Platformer\Platformer\Platformer\bin\x86\Debug\Content\playerSheet.xnb</Output>
+      <Time>2017-01-31T13:59:08.3203124-06:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{468C276D-C5DE-47FE-A6EA-5266F6ED4C9C}</ContentProjectGUID>
