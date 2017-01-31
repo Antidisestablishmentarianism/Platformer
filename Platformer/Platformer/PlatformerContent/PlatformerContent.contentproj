@@ -55,15 +55,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.bmp">
+    <Compile Include="Player.png">
       <Name>Player</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="playerSheet.png">
-      <Name>playerSheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

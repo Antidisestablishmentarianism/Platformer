@@ -34,3 +34,7 @@
 
 # Mac ghost file
 *.DS_Store
+
+# Debugging files
+*.exe
+*.pdb
