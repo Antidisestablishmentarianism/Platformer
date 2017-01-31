@@ -46,6 +46,16 @@ namespace Platformer
             Rand = new Random();
 
             base.Initialize();
+
+            List<Player> players = _objects.OfType<Player>().ToList();
+
+            _objects.ForEach(o =>
+            {
+                if (o is Player)
+                    _objects.Remove(o);
+            });
+
+            _objects.AddRange(players);
         }
 
         protected override void LoadContent()
