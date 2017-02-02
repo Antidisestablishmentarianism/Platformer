@@ -47,7 +47,7 @@ namespace Platformer
             const float scale = Game1.BackBufferWidth / (float)20;
             Position = new Vector2(position.X * scale, position.Y * scale);
 
-            Velocity = Vector2.Zero;
+            Velocity = new Vector2(0, Game1.Instance.Rand(1) == 0 ? Speed : -Speed);
 
             timer = AnimationLength;
 
@@ -101,16 +101,10 @@ namespace Platformer
                 {
                     if (tile.IsBlock)
                     {
-                        if (tile.Bounds.Contains(_collisionPoints[0]))
-                        {
-                            Position.Y = tile.Position.Y + Tile.Size + CollisionBuffer;
-                            Velocity.Y *= -0.5f;
-                        }
-
                         if (tile.Bounds.Contains(_collisionPoints[1]) || tile.Bounds.Contains(_collisionPoints[2]))
                         {
                             Position.X = tile.Position.X - Size.X - CollisionBuffer * 2;
-                            Velocity.X = 0;
+                            Velocity.X *= -0.5f;
                         }
 
                         if (tile.Bounds.Contains(_collisionPoints[3]))
@@ -123,7 +117,7 @@ namespace Platformer
                         if (tile.Bounds.Contains(_collisionPoints[4]) || tile.Bounds.Contains(_collisionPoints[5]))
                         {
                             Position.X = tile.Position.X + Tile.Size + CollisionBuffer;
-                            Velocity.X = 0;
+                            Velocity.X *= -0.5f;
                         }
                     }
                     else
