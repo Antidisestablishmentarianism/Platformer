@@ -69,7 +69,6 @@ namespace Platformer
             {
                 if (timer <= 0)
                     currentFrame++;
-                currentFrame = 0;
 
                 if (currentFrame >= SquashingAnimation.Count)
                     Destroy();
