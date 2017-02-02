@@ -13,6 +13,7 @@ namespace Platformer
         private const float Speed = 4f;
         private const float SprintSpeed = 6f;
         private const float Jump = -10f;
+        private const float AnimationLength = 0.4f;
 
         public Vector2 Position;
         public Vector2 Velocity;
@@ -31,6 +32,9 @@ namespace Platformer
         private readonly Point[] _collisionPoints;
         private const int CollisionBuffer = 1;
 
+        private int currentWalkingFrame = 0;
+        private int currentJumpingFrame = 0;
+        private float timer;
         private List<Rectangle> WalkingAnimation { get; } = new List<Rectangle>
         {
             new Rectangle(0, 0, 96, 96),
@@ -53,6 +57,7 @@ namespace Platformer
         };
 
         public static Texture2D Texture { get; set; }
+        public static Texture2D PlayerSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public Player(Vector2 position)
@@ -64,17 +69,43 @@ namespace Platformer
 
             _keyboard = Keyboard.GetState();
 
+            timer = AnimationLength;
+
             _collisionPoints = new Point[8];
             UpdateCollisionPoints();
         }
 
         public override void Update(List<GameObject> objects)
         {
-            _oldKeyboard = _keyboard;_keyboard = Keyboard.GetState();
+            _oldKeyboard = _keyboard; _keyboard = Keyboard.GetState();
             HandleKeyboardInput();
             HandleTileCollisions(objects);
 
             _isAbleToJump = Math.Abs(Velocity.Y) < Tolerance;
+
+            if (_isAbleToJump)
+            {
+                if (timer <= 0)
+                    currentWalkingFrame++;
+                currentJumpingFrame = 0;
+
+                if (currentWalkingFrame >= WalkingAnimation.Count)
+                    currentWalkingFrame = 0;
+            }
+            else
+            {
+                if (timer <= 0)
+                    currentJumpingFrame++;
+                currentWalkingFrame = 0;
+
+                if (currentJumpingFrame >= JumpingAnimation.Count)
+                    currentJumpingFrame = 0;
+            }
+
+            if (timer <= 0)
+                timer = AnimationLength;
+            else
+                timer -= 0.05f;
 
             Position += Velocity;
             Velocity.Y += Gravity;
@@ -84,8 +115,12 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Bounds, Color.White);
-            sb.Draw(Texture, Bounds, null, Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            //sb.Draw(Texture, Bounds, null, Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+
+            if (_isAbleToJump)
+                sb.Draw(PlayerSheet, Bounds, WalkingAnimation[currentWalkingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            else
+                sb.Draw(PlayerSheet, Bounds, JumpingAnimation[currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
 
             //DebugCollisionPoints(sb);
         }

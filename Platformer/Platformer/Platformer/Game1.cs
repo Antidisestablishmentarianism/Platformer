@@ -67,6 +67,7 @@ namespace Platformer
             Tile.EmptyBlock = Content.Load<Texture2D>("EmptyBlock");
 
             Player.Texture = Content.Load<Texture2D>("Player");
+            Player.PlayerSheet = Content.Load<Texture2D>("playerSheet");
 
             LoadLevel();
         }
