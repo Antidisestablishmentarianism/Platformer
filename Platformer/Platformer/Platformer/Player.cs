@@ -56,7 +56,6 @@ namespace Platformer
             new Rectangle(0, 288, 96, 96),
         };
 
-        public static Texture2D Texture { get; set; }
         public static Texture2D PlayerSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
@@ -115,8 +114,6 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            //sb.Draw(Texture, Bounds, null, Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
-
             if (_isAbleToJump)
                 sb.Draw(PlayerSheet, Bounds, WalkingAnimation[currentWalkingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
             else
@@ -207,7 +204,7 @@ namespace Platformer
         {
             for (var i = 0; i < _collisionPoints.Length; i++)
             {
-                sb.Draw(Texture, new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
+                sb.Draw(PlayerSheet, new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
             }
         }
 
