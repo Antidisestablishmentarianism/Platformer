@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Platformer
 {
@@ -13,22 +11,20 @@ namespace Platformer
         private const float Speed = 1f;
         private const float AnimationLength = 0.1f;
 
-        SpriteEffects _spriteEffects;
+        private SpriteEffects _spriteEffects;
 
         public Vector2 Position;
         public Vector2 Velocity;
 
-        private static readonly Point Size = new Point(32, 32);
+        private static readonly Point Size = new Point(48, 48);
 
-        private const float Tolerance = 0.0001f;
-
-        private bool squashed = false;
+        private bool _squashed;
 
         private readonly Point[] _collisionPoints;
-        private const int CollisionBuffer = 2;
+        private const int CollisionBuffer = 1;
 
-        private int currentFrame = 0;
-        private float timer;
+        private int _currentFrame;
+        private float _timer;
         private List<Rectangle> SquashingAnimation { get; } = new List<Rectangle>
         {
             new Rectangle(0, 0, 96, 96),
@@ -47,9 +43,9 @@ namespace Platformer
             const float scale = Game1.BackBufferWidth / (float)20;
             Position = new Vector2(position.X * scale, position.Y * scale);
 
-            Velocity = new Vector2(0, Game1.Instance.Rand(1) == 0 ? Speed : -Speed);
+            Velocity = new Vector2(Game1.Instance.Rand.Next(2) == 0 ? Speed : -Speed, 0);
 
-            timer = AnimationLength;
+            _timer = AnimationLength;
 
             _collisionPoints = new Point[8];
             UpdateCollisionPoints();
@@ -58,38 +54,62 @@ namespace Platformer
         public override void Update(List<GameObject> objects)
         {
             HandleTileCollisions(objects);
+            HandleEntityCollisions(objects);
 
             objects.OfType<Player>().ToList().ForEach(player =>
             {
                 if (player.Bounds.Contains(_collisionPoints[0]))
-                    squashed = true;
+                    _squashed = true;
             });
 
-            if (squashed)
+            if (_squashed)
             {
-                if (timer <= 0)
-                    currentFrame++;
+                if (_timer <= 0)
+                    _currentFrame++;
 
-                if (currentFrame >= SquashingAnimation.Count)
+                if (_currentFrame >= SquashingAnimation.Count)
                     Destroy();
             }
 
-            if (timer <= 0)
-                timer = AnimationLength;
+            if (_timer <= 0)
+                _timer = AnimationLength;
             else
-                timer -= 0.05f;
+                _timer -= 0.05f;
 
             Position += Velocity;
             Velocity.Y += Gravity;
-            Velocity.X = 0;
             UpdateCollisionPoints();
+        }
+
+        public void Squash()
+        {
+            _squashed = true;
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(SpriteSheet, Bounds, SquashingAnimation[currentFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            sb.Draw(SpriteSheet, Bounds, SquashingAnimation[_currentFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
 
             //DebugCollisionPoints(sb);
+        }
+
+        private void HandleEntityCollisions(IEnumerable<GameObject> objects)
+        {
+            objects.OfType<MuffinMan>().ToList().ForEach(muffinMan =>
+            {
+                if (muffinMan != this)
+                {
+                    if (muffinMan.Bounds.Contains(_collisionPoints[1]) || muffinMan.Bounds.Contains(_collisionPoints[2]))
+                    {
+                        Velocity.X *= -1f;
+                    }
+
+                    if (muffinMan.Bounds.Contains(_collisionPoints[4]) || muffinMan.Bounds.Contains(_collisionPoints[5]))
+                    {
+                        Velocity.X *= -1f;
+                    }
+                }
+            });
         }
 
         private void HandleTileCollisions(IEnumerable<GameObject> objects)
@@ -103,7 +123,7 @@ namespace Platformer
                         if (tile.Bounds.Contains(_collisionPoints[1]) || tile.Bounds.Contains(_collisionPoints[2]))
                         {
                             Position.X = tile.Position.X - Size.X - CollisionBuffer * 2;
-                            Velocity.X *= -0.5f;
+                            Velocity.X *= -1f;
                         }
 
                         if (tile.Bounds.Contains(_collisionPoints[3]))
@@ -116,7 +136,7 @@ namespace Platformer
                         if (tile.Bounds.Contains(_collisionPoints[4]) || tile.Bounds.Contains(_collisionPoints[5]))
                         {
                             Position.X = tile.Position.X + Tile.Size + CollisionBuffer;
-                            Velocity.X *= -0.5f;
+                            Velocity.X *= -1f;
                         }
                     }
                     else

@@ -32,9 +32,9 @@ namespace Platformer
         private readonly Point[] _collisionPoints;
         private const int CollisionBuffer = 1;
 
-        private int currentWalkingFrame = 0;
-        private int currentJumpingFrame = 0;
-        private float timer;
+        private int _currentWalkingFrame;
+        private int _currentJumpingFrame;
+        private float _timer;
         private List<Rectangle> WalkingAnimation { get; } = new List<Rectangle>
         {
             new Rectangle(0, 0, 96, 96),
@@ -68,7 +68,7 @@ namespace Platformer
 
             _keyboard = Keyboard.GetState();
 
-            timer = AnimationLength;
+            _timer = AnimationLength;
 
             _collisionPoints = new Point[8];
             UpdateCollisionPoints();
@@ -79,32 +79,33 @@ namespace Platformer
             _oldKeyboard = _keyboard; _keyboard = Keyboard.GetState();
             HandleKeyboardInput();
             HandleTileCollisions(objects);
+            HandleEnemyCollisions(objects);
 
             _isAbleToJump = Math.Abs(Velocity.Y) < Tolerance;
 
             if (_isAbleToJump)
             {
-                if (timer <= 0)
-                    currentWalkingFrame++;
-                currentJumpingFrame = 0;
+                if (_timer <= 0)
+                    _currentWalkingFrame++;
+                _currentJumpingFrame = 0;
 
-                if (currentWalkingFrame >= WalkingAnimation.Count)
-                    currentWalkingFrame = 0;
+                if (_currentWalkingFrame >= WalkingAnimation.Count)
+                    _currentWalkingFrame = 0;
             }
             else
             {
-                if (timer <= 0)
-                    currentJumpingFrame++;
-                currentWalkingFrame = 0;
+                if (_timer <= 0)
+                    _currentJumpingFrame++;
+                _currentWalkingFrame = 0;
 
-                if (currentJumpingFrame >= JumpingAnimation.Count)
-                    currentJumpingFrame = 0;
+                if (_currentJumpingFrame >= JumpingAnimation.Count)
+                    _currentJumpingFrame = 0;
             }
 
-            if (timer <= 0)
-                timer = AnimationLength;
+            if (_timer <= 0)
+                _timer = AnimationLength;
             else
-                timer -= 0.05f;
+                _timer -= 0.05f;
 
             Position += Velocity;
             Velocity.Y += Gravity;
@@ -114,12 +115,30 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            if (_isAbleToJump)
-                sb.Draw(PlayerSheet, Bounds, WalkingAnimation[currentWalkingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
-            else
-                sb.Draw(PlayerSheet, Bounds, JumpingAnimation[currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            sb.Draw(PlayerSheet, Bounds, _isAbleToJump ? WalkingAnimation[_currentWalkingFrame] : JumpingAnimation[_currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
 
             //DebugCollisionPoints(sb);
+        }
+
+        private void HandleEnemyCollisions(IEnumerable<GameObject> objects)
+        {
+            objects.OfType<MuffinMan>().ToList().ForEach(muffinMan =>
+            {
+                if (muffinMan.Bounds.Contains(_collisionPoints[3]) || muffinMan.Bounds.Contains(_collisionPoints[6]) || muffinMan.Bounds.Contains(_collisionPoints[7]))
+                {
+                    Velocity.Y = Jump;
+                    muffinMan.Squash();
+                }
+
+                if (muffinMan.Bounds.Contains(_collisionPoints[0]) ||
+                    muffinMan.Bounds.Contains(_collisionPoints[1]) ||
+                    muffinMan.Bounds.Contains(_collisionPoints[2]) ||
+                    muffinMan.Bounds.Contains(_collisionPoints[4]) ||
+                    muffinMan.Bounds.Contains(_collisionPoints[5]))
+                {
+                    Destroy();
+                }
+            });
         }
 
         private void HandleKeyboardInput()

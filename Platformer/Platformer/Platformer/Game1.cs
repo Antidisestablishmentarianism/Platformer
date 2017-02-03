@@ -15,12 +15,15 @@ namespace Platformer
 
         public GraphicsDeviceManager Graphics { get; }
         private SpriteBatch _spriteBatch;
+        private SpriteFont _gameOverFont;
 
         public Random Rand;
 
         private List<GameObject> _objects;
 
         private Level _level;
+
+        private bool _gameOver;
 
         public static Game1 Instance;
 
@@ -61,6 +64,7 @@ namespace Platformer
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _gameOverFont = Content.Load<SpriteFont>("GameOver");
 
             Tile.BlockSheet = Content.Load<Texture2D>("Blocks");
             Tile.PlatformSheet = Content.Load<Texture2D>("Platforms");
@@ -82,8 +86,14 @@ namespace Platformer
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) Exit();
 
-            _objects.ForEach(o => o.Update(_objects));
+            _objects.ForEach(o =>
+            {
+                if (!_gameOver) 
+                    o.Update(_objects);
+            });
             _objects = _objects.Where(o => !o.ToDestroy).ToList();
+
+            _gameOver = _objects.OfType<Player>().ToList().Count == 0;
 
             base.Update(gameTime);
         }
@@ -94,6 +104,15 @@ namespace Platformer
 
             _spriteBatch.Begin();
             _objects.ForEach(o => o.Draw(_spriteBatch));
+
+            if (_gameOver)
+            {
+                string text = "GAME OVER";
+                Vector2 size = _gameOverFont.MeasureString(text);
+                Vector2 position = new Vector2((float)GraphicsDevice.Viewport.Width / 2 - size.X / 2, (float)GraphicsDevice.Viewport.Height / 2 - size.Y / 2);
+                _spriteBatch.DrawString(_gameOverFont, text, position, Color.Red);
+            }
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
