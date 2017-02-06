@@ -91,9 +91,14 @@ namespace Platformer
                 if (!_gameOver) 
                     o.Update(_objects);
             });
-            _objects = _objects.Where(o => !o.ToDestroy).ToList();
 
-            _gameOver = _objects.OfType<Player>().ToList().Count == 0;
+            _objects.OfType<Player>().ToList().ForEach(player =>
+            {
+                if (player.ToDestroy && !_gameOver)
+                    _gameOver = true;
+            });
+
+            _objects = _objects.Where(o => !o.ToDestroy).ToList();
 
             base.Update(gameTime);
         }

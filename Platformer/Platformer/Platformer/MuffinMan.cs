@@ -47,6 +47,8 @@ namespace Platformer
 
             _timer = AnimationLength;
 
+            _spriteEffects = new SpriteEffects();
+
             _collisionPoints = new Point[8];
             UpdateCollisionPoints();
         }

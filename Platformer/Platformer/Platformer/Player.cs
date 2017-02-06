@@ -126,7 +126,7 @@ namespace Platformer
             {
                 if (muffinMan.Bounds.Contains(_collisionPoints[3]) || muffinMan.Bounds.Contains(_collisionPoints[6]) || muffinMan.Bounds.Contains(_collisionPoints[7]))
                 {
-                    Velocity.Y = Jump;
+                    Velocity.Y *= -1f;
                     muffinMan.Squash();
                 }
 
