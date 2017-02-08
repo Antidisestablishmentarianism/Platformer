@@ -60,15 +60,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="playerSheet.png">
-      <Name>playerSheet</Name>
+    <Compile Include="muffinman.png">
+      <Name>muffinman</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="muffinman.png">
-      <Name>muffinman</Name>
+    <Compile Include="playerSheet.png">
+      <Name>playerSheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -34,6 +34,8 @@ namespace Platformer
 
         private int _currentWalkingFrame;
         private int _currentJumpingFrame;
+        private int _currentDyingFrame;
+        private bool _isDead;
         private float _timer;
         private List<Rectangle> WalkingAnimation { get; } = new List<Rectangle>
         {
@@ -54,6 +56,13 @@ namespace Platformer
             new Rectangle(192, 192, 96, 96),
             new Rectangle(288, 192, 96, 96),
             new Rectangle(0, 288, 96, 96),
+        };
+
+        private List<Rectangle> DyingAnimation { get; } = new List<Rectangle>
+        {
+            new Rectangle(96, 288, 96, 96),
+            new Rectangle(192, 288, 96, 96),
+            new Rectangle(288, 288, 96, 96)
         };
 
         public static Texture2D PlayerSheet { get; set; }
@@ -83,7 +92,17 @@ namespace Platformer
 
             _isAbleToJump = Math.Abs(Velocity.Y) < Tolerance;
 
-            if (_isAbleToJump)
+            if (_isDead)
+            {
+                if (_timer <= 0)
+                    _currentDyingFrame++;
+                _currentWalkingFrame = 0;
+                _currentJumpingFrame = 0;
+
+                if (_currentDyingFrame >= DyingAnimation.Count)
+                    Destroy();
+            }
+            else if (_isAbleToJump)
             {
                 if (_timer <= 0)
                     _currentWalkingFrame++;
@@ -115,7 +134,7 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(PlayerSheet, Bounds, _isAbleToJump ? WalkingAnimation[_currentWalkingFrame] : JumpingAnimation[_currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            sb.Draw(PlayerSheet, Bounds, _isDead ? DyingAnimation[_currentDyingFrame] : _isAbleToJump ? WalkingAnimation[_currentWalkingFrame] : JumpingAnimation[_currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
 
             //DebugCollisionPoints(sb);
         }
@@ -136,7 +155,7 @@ namespace Platformer
                     muffinMan.Bounds.Contains(_collisionPoints[4]) ||
                     muffinMan.Bounds.Contains(_collisionPoints[5]))
                 {
-                    Destroy();
+                    _isDead = true;
                 }
             });
         }
