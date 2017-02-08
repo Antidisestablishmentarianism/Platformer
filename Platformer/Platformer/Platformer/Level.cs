@@ -79,6 +79,10 @@ namespace Platformer
                     objects.Add(new MuffinMan(new Vector2(x, y)));
                     return new Tile(new Point(x, y), -1, false);
 
+                case 'c':
+                    CollectableManager.Instance.AddCollectible(new Collectable(new Vector2(x, y)));
+                    return new Tile(new Point(x, y), -1, false);
+
                 case '.':
                     return new Tile(new Point(x, y), -1, false);
 

@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collectable.cs" />
+    <Compile Include="CollectableManager.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="IDisposable.cs" />
     <Compile Include="Level.cs" />

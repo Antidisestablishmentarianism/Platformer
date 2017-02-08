@@ -16,8 +16,11 @@ namespace Platformer
         public GraphicsDeviceManager Graphics { get; }
         private SpriteBatch _spriteBatch;
         private SpriteFont _gameOverFont;
+        private SpriteFont _scoreFont;
 
         public Random Rand;
+
+        private int score;
 
         private List<GameObject> _objects;
 
@@ -59,12 +62,14 @@ namespace Platformer
             });
 
             _objects.AddRange(players);
+            CollectableManager.Instance.CollectableCollected();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _gameOverFont = Content.Load<SpriteFont>("GameOver");
+            _scoreFont = Content.Load<SpriteFont>("Score");
 
             Tile.BlockSheet = Content.Load<Texture2D>("Blocks");
             Tile.PlatformSheet = Content.Load<Texture2D>("Platforms");
@@ -73,6 +78,8 @@ namespace Platformer
             Player.PlayerSheet = Content.Load<Texture2D>("playerSheet");
 
             MuffinMan.SpriteSheet = Content.Load<Texture2D>("muffinman");
+
+            Collectable.CollectableSheet = Content.Load<Texture2D>("Collectables/scribbles");
 
             LoadLevel();
         }
@@ -110,6 +117,8 @@ namespace Platformer
             _spriteBatch.Begin();
             _objects.ForEach(o => o.Draw(_spriteBatch));
 
+            _spriteBatch.DrawString(_scoreFont, "" + score, new Vector2(96, 64), Color.Black);
+
             if (_gameOver)
             {
                 string text = "GAME OVER";
@@ -126,6 +135,16 @@ namespace Platformer
         private void LoadLevel()
         {
             _level = new Level(_objects, Services, @"Content/Levels/Level01.txt");
+        }
+
+        public void IncrementScore(int amount)
+        {
+            score += amount;
+        }
+
+        public void AddCollectible(Collectable c)
+        {
+            _objects.Add(c);
         }
     }
 }

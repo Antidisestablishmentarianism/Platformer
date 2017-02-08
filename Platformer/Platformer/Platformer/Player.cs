@@ -14,6 +14,7 @@ namespace Platformer
         private const float SprintSpeed = 6f;
         private const float Jump = -10f;
         private const float AnimationLength = 0.4f;
+        private const float AnimationDecrement = 0.05f;
 
         public Vector2 Position;
         public Vector2 Velocity;
@@ -124,7 +125,7 @@ namespace Platformer
             if (_timer <= 0)
                 _timer = AnimationLength;
             else
-                _timer -= 0.05f;
+                _timer -= AnimationDecrement;
 
             Position += Velocity;
             Velocity.Y += Gravity;

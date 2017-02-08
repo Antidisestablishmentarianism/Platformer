@@ -10,8 +10,7 @@ namespace Platformer
         private const float Gravity = 0.3f;
         private const float Speed = 1f;
         private const float AnimationLength = 0.1f;
-
-        private SpriteEffects _spriteEffects;
+        private const float AnimationDecrement = 0.05f;
 
         public Vector2 Position;
         public Vector2 Velocity;
@@ -47,8 +46,6 @@ namespace Platformer
 
             _timer = AnimationLength;
 
-            _spriteEffects = new SpriteEffects();
-
             _collisionPoints = new Point[8];
             UpdateCollisionPoints();
         }
@@ -76,7 +73,7 @@ namespace Platformer
             if (_timer <= 0)
                 _timer = AnimationLength;
             else
-                _timer -= 0.05f;
+                _timer -= AnimationDecrement;
 
             Position += Velocity;
             Velocity.Y += Gravity;
@@ -90,7 +87,7 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(SpriteSheet, Bounds, SquashingAnimation[_currentFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            sb.Draw(SpriteSheet, Bounds, SquashingAnimation[_currentFrame], Color.White);
 
             //DebugCollisionPoints(sb);
         }
