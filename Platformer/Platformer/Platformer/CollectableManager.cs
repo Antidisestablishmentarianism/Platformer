@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace Platformer
 {
     public class CollectableManager
     {
-        private static CollectableManager instance;
-        private List<Collectable> collectables;
-        private Color[] colors =
+        private static CollectableManager _instance;
+        private readonly List<Collectable> _collectables;
+        private readonly Color[] _colors =
         {
             Color.Blue,
             Color.Green,
@@ -19,33 +16,29 @@ namespace Platformer
             Color.Red
         };
 
-        public static CollectableManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new CollectableManager();
-
-                return instance;
-            }
-        }
+        public static CollectableManager Instance => _instance ?? (_instance = new CollectableManager());
 
         private CollectableManager()
         {
-            collectables = new List<Collectable>();
+            _collectables = new List<Collectable>();
         }
 
         public void AddCollectible(Collectable c)
         {
-            collectables.Add(c);
+            _collectables.Add(c);
         }
 
         public void CollectableCollected()
         {
-            int index = Game1.Instance.Rand.Next(collectables.Count);
-            Collectable c = collectables[index];
-            c.Color = colors[Game1.Instance.Rand.Next(colors.Length)];
+            var index = Game1.Instance.Rand.Next(_collectables.Count);
+            var c = _collectables[index];
+            c.Color = _colors[Game1.Instance.Rand.Next(_colors.Length)];
             Game1.Instance.AddCollectible(c.Clone());
+        }
+
+        public void Reset()
+        {
+            _collectables.Clear();
         }
     }
 }

@@ -14,17 +14,16 @@ namespace Platformer
         public const int BackBufferHeight = 720;
 
         public GraphicsDeviceManager Graphics { get; }
+
+        private int Score { get; set; }
+
         private SpriteBatch _spriteBatch;
         private SpriteFont _gameOverFont;
         private SpriteFont _scoreFont;
 
         public Random Rand;
 
-        private int score;
-
         private List<GameObject> _objects;
-
-        private Level _level;
 
         private bool _gameOver;
 
@@ -53,7 +52,7 @@ namespace Platformer
 
             base.Initialize();
 
-            List<Player> players = _objects.OfType<Player>().ToList();
+            var players = _objects.OfType<Player>().ToList();
 
             _objects.ForEach(o =>
             {
@@ -71,17 +70,17 @@ namespace Platformer
             _gameOverFont = Content.Load<SpriteFont>("GameOver");
             _scoreFont = Content.Load<SpriteFont>("Score");
 
-            Tile.BlockSheet = Content.Load<Texture2D>("Blocks");
-            Tile.PlatformSheet = Content.Load<Texture2D>("Platforms");
-            Tile.EmptyBlock = Content.Load<Texture2D>("EmptyBlock");
+            TextureManager.Instance.AddTexture("BlockSheet", Content.Load<Texture2D>("Blocks"));
+            TextureManager.Instance.AddTexture("PlatformSheet", Content.Load<Texture2D>("Platforms"));
+            TextureManager.Instance.AddTexture("EmptyBlock", Content.Load<Texture2D>("EmptyBlock"));
+            TextureManager.Instance.AddTexture("PlayerSheet", Content.Load<Texture2D>("playerSheet"));
+            TextureManager.Instance.AddTexture("MuffinManSheet", Content.Load<Texture2D>("muffinman"));
+            TextureManager.Instance.AddTexture("CollectableSheet", Content.Load<Texture2D>("Collectables/scribbles"));
 
-            Player.PlayerSheet = Content.Load<Texture2D>("playerSheet");
+            if (TextureManager.DebugCollisionPoints)
+                TextureManager.Instance.AddTexture("DebugCollisionPoints", Content.Load<Texture2D>("DebugCollisionPoints"));
 
-            MuffinMan.SpriteSheet = Content.Load<Texture2D>("muffinman");
-
-            Collectable.CollectableSheet = Content.Load<Texture2D>("Collectables/scribbles");
-
-            LoadLevel();
+            LoadLevel("01");
         }
 
         protected override void UnloadContent()
@@ -117,13 +116,13 @@ namespace Platformer
             _spriteBatch.Begin();
             _objects.ForEach(o => o.Draw(_spriteBatch));
 
-            _spriteBatch.DrawString(_scoreFont, "" + score, new Vector2(96, 64), Color.Black);
+            _spriteBatch.DrawString(_scoreFont, "" + Score, new Vector2(96, 64), Color.Black);
 
             if (_gameOver)
             {
-                string text = "GAME OVER";
-                Vector2 size = _gameOverFont.MeasureString(text);
-                Vector2 position = new Vector2((float)GraphicsDevice.Viewport.Width / 2 - size.X / 2, (float)GraphicsDevice.Viewport.Height / 2 - size.Y / 2);
+                const string text = "GAME OVER";
+                var size = _gameOverFont.MeasureString(text);
+                var position = new Vector2((float)GraphicsDevice.Viewport.Width / 2 - size.X / 2, (float)GraphicsDevice.Viewport.Height / 2 - size.Y / 2);
                 _spriteBatch.DrawString(_gameOverFont, text, position, Color.Red);
             }
 
@@ -132,14 +131,14 @@ namespace Platformer
             base.Draw(gameTime);
         }
 
-        private void LoadLevel()
+        private void LoadLevel(string num)
         {
-            _level = new Level(_objects, Services, @"Content/Levels/Level01.txt");
+            var level = new Level(_objects, Services, @"Content/Levels/Level" + num + ".txt");
         }
 
         public void IncrementScore(int amount)
         {
-            score += amount;
+            Score += amount;
         }
 
         public void AddCollectible(Collectable c)

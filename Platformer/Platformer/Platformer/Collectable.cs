@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,11 +7,11 @@ namespace Platformer
 {
     public class Collectable : GameObject
     {
-        private const int score = 1;
+        private const int Score = 1;
         private const float AnimationLength = 0.4f;
         private const float AnimationDecrement = 0.05f;
 
-        private Point Position;
+        private Point _position;
         private static readonly Point Size = new Point(32, 32);
 
         private int _currentFrame;
@@ -26,14 +24,14 @@ namespace Platformer
             new Rectangle(96, 0, 32, 32)
         };
 
-        public static Texture2D CollectableSheet { get; set; }
-        public Rectangle Bounds => new Rectangle(Position.X, Position.Y, Size.X, Size.Y);
+        //public static Texture2D CollectableSheet { get; set; }
+        public Rectangle Bounds => new Rectangle(_position.X, _position.Y, Size.X, Size.Y);
         public Color Color { get; set; } = Color.Purple;
 
         public Collectable(Vector2 position)
         {
             const float scale = Game1.BackBufferWidth / (float)20;
-            Position = new Point((int)(position.X * scale), (int)(position.Y * scale));
+            _position = new Point((int)(position.X * scale), (int)(position.Y * scale));
         }
 
         public override void Update(List<GameObject> objects)
@@ -42,7 +40,7 @@ namespace Platformer
             {
                 if (player.Bounds.Intersects(Bounds))
                 {
-                    Game1.Instance.IncrementScore(1);
+                    Game1.Instance.IncrementScore(Score);
                     CollectableManager.Instance.CollectableCollected();
                     Destroy();
                 }
@@ -62,12 +60,12 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(CollectableSheet, Bounds, Animation[_currentFrame], Color);
+            sb.Draw(TextureManager.Instance.GetTexture("CollectableSheet"), Bounds, Animation[_currentFrame], Color);
         }
 
         public Collectable Clone()
         {
-            return this.MemberwiseClone() as Collectable;
+            return MemberwiseClone() as Collectable;
         }
     }
 }

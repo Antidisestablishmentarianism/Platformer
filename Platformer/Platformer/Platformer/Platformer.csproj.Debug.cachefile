@@ -1,9 +1,10 @@
 Content\Blocks.xnb
 Content\Platforms.xnb
 Content\EmptyBlock.xnb
-Content\muffinman.xnb
 Content\playerSheet.xnb
+Content\muffinman.xnb
 Content\GameOver.xnb
 Content\Collectables\scribbles.xnb
 Content\Score.xnb
+Content\DebugCollisionPoints.xnb
 Content\Levels\Level01.txt

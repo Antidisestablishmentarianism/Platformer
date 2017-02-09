@@ -66,7 +66,7 @@ namespace Platformer
             new Rectangle(288, 288, 96, 96)
         };
 
-        public static Texture2D PlayerSheet { get; set; }
+        //public static Texture2D PlayerSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public Player(Vector2 position)
@@ -135,9 +135,10 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(PlayerSheet, Bounds, _isDead ? DyingAnimation[_currentDyingFrame] : _isAbleToJump ? WalkingAnimation[_currentWalkingFrame] : JumpingAnimation[_currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
+            sb.Draw(TextureManager.Instance.GetTexture("PlayerSheet"), Bounds, _isDead ? DyingAnimation[_currentDyingFrame] : _isAbleToJump ? WalkingAnimation[_currentWalkingFrame] : JumpingAnimation[_currentJumpingFrame], Color.White, 0f, Vector2.Zero, _spriteEffects, 1f);
 
-            //DebugCollisionPoints(sb);
+            if (TextureManager.DebugCollisionPoints)
+                DebugCollisionPoints(sb);
         }
 
         private void HandleEnemyCollisions(IEnumerable<GameObject> objects)
@@ -243,7 +244,7 @@ namespace Platformer
         {
             for (var i = 0; i < _collisionPoints.Length; i++)
             {
-                sb.Draw(PlayerSheet, new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
+                sb.Draw(TextureManager.Instance.GetTexture("DebugCollisionPoints"), new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
             }
         }
 

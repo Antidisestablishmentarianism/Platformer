@@ -34,7 +34,7 @@ namespace Platformer
             new Rectangle(96, 96, 96, 96),
         };
 
-        public static Texture2D SpriteSheet { get; set; }
+        //public static Texture2D SpriteSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public MuffinMan(Vector2 position)
@@ -87,9 +87,10 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(SpriteSheet, Bounds, SquashingAnimation[_currentFrame], Color.White);
+            sb.Draw(TextureManager.Instance.GetTexture("MuffinManSheet"), Bounds, SquashingAnimation[_currentFrame], Color.White);
 
-            //DebugCollisionPoints(sb);
+            if (TextureManager.DebugCollisionPoints)
+                DebugCollisionPoints(sb);
         }
 
         private void HandleEntityCollisions(IEnumerable<GameObject> objects)
@@ -154,7 +155,7 @@ namespace Platformer
         {
             for (var i = 0; i < _collisionPoints.Length; i++)
             {
-                sb.Draw(SpriteSheet, new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
+                sb.Draw(TextureManager.Instance.GetTexture("DebugCollisionPoints"), new Rectangle(_collisionPoints[i].X - 2, _collisionPoints[i].Y - 2, 4, 4), Color.White);
             }
         }
 

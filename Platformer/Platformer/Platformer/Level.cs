@@ -124,6 +124,7 @@ namespace Platformer
             }
 
             Content.Unload();
+            CollectableManager.Instance.Reset();
         }
     }
 }

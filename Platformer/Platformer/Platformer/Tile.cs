@@ -8,7 +8,7 @@ namespace Platformer
     {
         public const int Size = 64;
 
-        public static Texture2D BlockSheet, PlatformSheet, EmptyBlock;
+        //public static Texture2D BlockSheet, PlatformSheet, EmptyBlock;
 
         public Point Position;
         public Point SourcePos;
@@ -39,7 +39,7 @@ namespace Platformer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(IsBlock ? BlockSheet : IsEmpty ? EmptyBlock : PlatformSheet, Bounds, SourceBounds, Color.White);
+            sb.Draw(IsBlock ? TextureManager.Instance.GetTexture("BlockSheet") : IsEmpty ? TextureManager.Instance.GetTexture("EmptyBlock") : TextureManager.Instance.GetTexture("PlatformSheet"), Bounds, SourceBounds, Color.White);
         }
     }
 }
