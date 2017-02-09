@@ -133,7 +133,7 @@ namespace Platformer
 
         private void LoadLevel(string num)
         {
-            var level = new Level(_objects, Services, @"Content/Levels/Level" + num + ".txt");
+            new Level(_objects, Services, @"Content/Levels/Level" + num + ".txt");
         }
 
         public void IncrementScore(int amount)

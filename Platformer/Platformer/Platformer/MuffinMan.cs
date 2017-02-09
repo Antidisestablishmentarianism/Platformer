@@ -34,7 +34,6 @@ namespace Platformer
             new Rectangle(96, 96, 96, 96),
         };
 
-        //public static Texture2D SpriteSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public MuffinMan(Vector2 position)

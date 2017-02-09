@@ -24,7 +24,6 @@ namespace Platformer
             new Rectangle(96, 0, 32, 32)
         };
 
-        //public static Texture2D CollectableSheet { get; set; }
         public Rectangle Bounds => new Rectangle(_position.X, _position.Y, Size.X, Size.Y);
         public Color Color { get; set; } = Color.Purple;
 

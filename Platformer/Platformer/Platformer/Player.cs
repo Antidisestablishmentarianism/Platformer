@@ -66,7 +66,6 @@ namespace Platformer
             new Rectangle(288, 288, 96, 96)
         };
 
-        //public static Texture2D PlayerSheet { get; set; }
         public Rectangle Bounds => new Rectangle((int)(Position.X), (int)(Position.Y), Size.X, Size.Y);
 
         public Player(Vector2 position)

@@ -8,8 +8,6 @@ namespace Platformer
     {
         public const int Size = 64;
 
-        //public static Texture2D BlockSheet, PlatformSheet, EmptyBlock;
-
         public Point Position;
         public Point SourcePos;
 
